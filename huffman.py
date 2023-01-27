@@ -88,7 +88,54 @@ class HuffmanCoding:
             b.append(int(byte, 2))
         return b
     
+    def compress(self):
+        # Get file from path
+        filename, file_extension = os.path.splitext(self.path)
+        output_path = filename + ".cmp"
+        
+        # Read text from file
+        with open(self.path, 'r') as file, open(output_path, 'wb') as output:
+            text = file.read()
+            text = text.rstrip()
+
+            # Make frequency dictionary using the text
+            frequency = self.make_frequency_dict(text)
+
+            # Calculate the length of the frequency dictionary
+            frequency_dict_length = len(frequency)
+
+            # Construct the Huffman tree
+            self.make_heap(frequency)
+            self.merge_nodes()
+            self.make_codes()
+
+            # Add the encoded of the frequency of every character for decompression
+            # And also the encoded length of the frequency dictionary
+            freq_encoded_text = ""
+            for key in frequency:
+                freq_encoded_text += '{0:08b}'.format(len('{0:08b}'.format(ord(key))))
+                freq_encoded_text += '{0:08b}'.format(ord(key))
+                freq_encoded_text += '{0:08b}'.format(len('{0:08b}'.format(frequency[key])))
+                freq_encoded_text += '{0:08b}'.format(frequency[key])
+
+            frequency_dict_length = '{0:08b}'.format(frequency_dict_length)    
+            # Create encoded text
+
+            encoded_text = self.get_encoded_text(text)
+            encoded_text = frequency_dict_length + freq_encoded_text + encoded_text
+
+            # Pad encoded text
+            padded_encoded_text = self.pad_encoded_text(encoded_text)
+
+            # Convert padded encoded text to bytes
+            b = self.get_byte_array(padded_encoded_text)
+
+            # Write to output file
+            output.write(bytes(b))
+
+        return output_path
     
+
 
 
 
