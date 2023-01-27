@@ -177,7 +177,28 @@ class HuffmanCoding:
 
         return decoded_text
     
-    
+    def decompress(self):
+        # decompress from the codes in the file
+        filename = os.path.splitext(self.path)
+        output_path = str(filename[0]) + "_decompressed" + ".txt"
+
+        with open(self.path, 'rb') as file, open(output_path, 'w') as output:
+            bit_string = ""
+
+            byte = file.read(1)
+            while(len(byte) > 0):
+                byte = ord(byte)
+                bits = bin(byte)[2:].rjust(8, '0')
+                bit_string += bits
+                byte = file.read(1)
+
+            encoded_text = self.remove_padding(bit_string)
+
+            decoded_text = self.decode_text(encoded_text)
+
+            output.write(decoded_text)
+
+        return output_path
 
 
 
