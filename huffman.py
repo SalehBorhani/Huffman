@@ -136,7 +136,70 @@ class HuffmanCoding:
         return output_path
     
     # Functions for decompression
+
+    def remove_padding(self, padded_encoded_text):
+        padded_info = padded_encoded_text[:8]
+        extra_padding = int(padded_info, 2)
+
+        padded_encoded_text = padded_encoded_text[8:] 
+        encoded_text = padded_encoded_text[:-1*extra_padding]
+
+        return encoded_text
     
+    def decode_text(self, encoded_text):
+        current_code = ""
+        decoded_text = ""
+        # make the frequency dictionary
+        frequency_dict_length = int(encoded_text[:8], 2)
+        encoded_text = encoded_text[8:]
+        frequency = {}
+        for i in range(frequency_dict_length):
+            key_length = int(encoded_text[:8], 2)
+            encoded_text = encoded_text[8:]
+            key = chr(int(encoded_text[:key_length], 2))
+            encoded_text = encoded_text[key_length:]
+            value_length = int(encoded_text[:8], 2)
+            encoded_text = encoded_text[8:]
+            value = int(encoded_text[:value_length], 2)
+            encoded_text = encoded_text[value_length:]
+            frequency[key] = value
+
+        self.make_heap(frequency)
+        self.merge_nodes()
+        self.make_codes()    
+        
+        for bit in encoded_text:
+            current_code += bit
+            if(current_code in self.reverse_mapping):
+                character = self.reverse_mapping[current_code]
+                decoded_text += character
+                current_code = ""
+
+        return decoded_text
+    
+    def decompress(self):
+        # decompress from the codes in the file
+        filename = os.path.splitext(self.path)
+        output_path = str(filename[0]) + "_decompressed" + ".txt"
+
+        with open(self.path, 'rb') as file, open(output_path, 'w') as output:
+            bit_string = ""
+
+            byte = file.read(1)
+            while(len(byte) > 0):
+                byte = ord(byte)
+                bits = bin(byte)[2:].rjust(8, '0')
+                bit_string += bits
+                byte = file.read(1)
+
+            encoded_text = self.remove_padding(bit_string)
+
+            decoded_text = self.decode_text(encoded_text)
+
+            output.write(decoded_text)
+
+        return output_path
+
 
 
 
