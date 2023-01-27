@@ -48,6 +48,23 @@ class HuffmanCoding:
             merged.left = node1
             merged.right = node2
             heapq.heappush(self.heap, merged)
+
+    def make_codes_helper(self, root, current_code):
+        if(root == None):
+            return
+        if(root.char != None):
+            self.codes[root.char] = current_code
+            self.reverse_mapping[current_code] = root.char
+            return
+        self.make_codes_helper(root.left, current_code + "0")
+        self.make_codes_helper(root.right, current_code + "1")
+
+    def make_codes(self):
+        root = heapq.heappop(self.heap)
+        current_code = ""
+        self.make_codes_helper(root, current_code)
     
                     
+
+
 
