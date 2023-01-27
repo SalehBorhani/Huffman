@@ -77,6 +77,18 @@ class HuffmanCoding:
         padded_info = "{0:08b}".format(extra_padding)
         encoded_text = padded_info + encoded_text
         return encoded_text
+    
+    def get_byte_array(self, padded_encoded_text):
+        if(len(padded_encoded_text) % 8 != 0):
+            print("Encoded text not padded properly")
+            exit(0)
+        b = bytearray()
+        for i in range(0, len(padded_encoded_text), 8):
+            byte = padded_encoded_text[i:i+8]
+            b.append(int(byte, 2))
+        return b
+    
+    
 
 
 
