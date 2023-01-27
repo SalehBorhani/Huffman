@@ -136,6 +136,16 @@ class HuffmanCoding:
         return output_path
     
     # Functions for decompression
+
+    def remove_padding(self, padded_encoded_text):
+        padded_info = padded_encoded_text[:8]
+        extra_padding = int(padded_info, 2)
+
+        padded_encoded_text = padded_encoded_text[8:] 
+        encoded_text = padded_encoded_text[:-1*extra_padding]
+
+        return encoded_text
+    
     
 
 
