@@ -135,8 +135,8 @@ class HuffmanCoding:
 
         return output_path
     
-
-
+    # Functions for decompression
+    
 
 
 
