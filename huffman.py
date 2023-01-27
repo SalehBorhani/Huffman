@@ -146,7 +146,39 @@ class HuffmanCoding:
 
         return encoded_text
     
+    def decode_text(self, encoded_text):
+        current_code = ""
+        decoded_text = ""
+        # make the frequency dictionary
+        frequency_dict_length = int(encoded_text[:8], 2)
+        encoded_text = encoded_text[8:]
+        frequency = {}
+        for i in range(frequency_dict_length):
+            key_length = int(encoded_text[:8], 2)
+            encoded_text = encoded_text[8:]
+            key = chr(int(encoded_text[:key_length], 2))
+            encoded_text = encoded_text[key_length:]
+            value_length = int(encoded_text[:8], 2)
+            encoded_text = encoded_text[8:]
+            value = int(encoded_text[:value_length], 2)
+            encoded_text = encoded_text[value_length:]
+            frequency[key] = value
+
+        self.make_heap(frequency)
+        self.merge_nodes()
+        self.make_codes()    
+        
+        for bit in encoded_text:
+            current_code += bit
+            if(current_code in self.reverse_mapping):
+                character = self.reverse_mapping[current_code]
+                decoded_text += character
+                current_code = ""
+
+        return decoded_text
     
+    
+
 
 
 
