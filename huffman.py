@@ -35,4 +35,19 @@ class HuffmanCoding:
             frequency[character] += 1
         return frequency
     
+    def make_heap(self, frequency):
+        for key in frequency:
+            node = HeapNode(key, frequency[key])
+            heapq.heappush(self.heap, node)
+
+    def merge_nodes(self):
+        while(len(self.heap) > 1):
+            node1 = heapq.heappop(self.heap)
+            node2 = heapq.heappop(self.heap)
+            merged = HeapNode(None, node1.freq + node2.freq)
+            merged.left = node1
+            merged.right = node2
+            heapq.heappush(self.heap, merged)
     
+                    
+
