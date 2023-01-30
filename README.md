@@ -48,3 +48,8 @@ And at the end the codes of the characters will be like below:
 
 ![image](https://user-images.githubusercontent.com/95637102/215475197-8c44d40f-c1ed-4e87-80e9-632988784eb9.png)
 
+## Run the project
+To run the project, First clone the repository then you only need to run the `gui.py` and it will with simple gui.
+```
+git clone https://github.com/SalehBorhani/Huffman.git && cd Huffman && python3 gui.py
+```
