@@ -37,3 +37,14 @@ Huffman coding is done with the help of the following steps:
 7. Repeat steps 3 to 5 for all the characters.
 
 ![image](https://user-images.githubusercontent.com/95637102/215179427-9dff8cd4-9d0f-4a1d-a049-12eb3c74a384.png)
+
+![image](https://user-images.githubusercontent.com/95637102/215474460-cc9c2b82-8b6b-4bdf-a829-9d74de06c9e1.png)
+
+8. For each non-leaf node, assign 0 to the left edge and 1 to the right edge.
+
+![image](https://user-images.githubusercontent.com/95637102/215474679-fce89144-7614-4781-86f5-7bdccde73091.png)
+
+And at the end the codes of the characters will be like below:
+
+![image](https://user-images.githubusercontent.com/95637102/215475197-8c44d40f-c1ed-4e87-80e9-632988784eb9.png)
+
