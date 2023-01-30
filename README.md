@@ -53,3 +53,4 @@ To run the project, First clone the repository then you only need to run the `gu
 ```
 git clone https://github.com/SalehBorhani/Huffman.git && cd Huffman && python3 gui.py
 ```
+For test compress the `file.txt`.
